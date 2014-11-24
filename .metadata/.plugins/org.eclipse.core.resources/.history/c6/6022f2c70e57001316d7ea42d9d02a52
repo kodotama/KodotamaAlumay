@@ -1,0 +1,21 @@
+var  UtilJS = new function(){
+	this.showMessages= function(type, message,navigate,urlRoom){
+		 
+		 
+		var messageSpan = $('#messageSpan');
+		messageSpan.addClass(type);
+		
+		if(navigate=='3')
+		{
+			urlRoom='<a onclick=open_content_area("'+urlRoom
+													+"&usageTypeId="+navigate
+													+"&roomNameStr='"+message
+													+'")>Sen kur!</a>';
+ 			messageSpan.html(message+":"+urlRoom);
+        }else{
+        	messageSpan.text(message);
+        }
+		
+	};
+	
+};

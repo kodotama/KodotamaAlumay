@@ -1,0 +1,63 @@
+<title><!--TITLE--></title>
+<?php
+ob_start();
+	$root = realpath ( $_SERVER ["DOCUMENT_ROOT"] );
+	require_once $root . '/x7/includes/Util.php';
+ 	$db = Util::getDb ();
+	$confige= Util::getConfig ();
+    $dbprefix =$confige['prefix'];
+	$message_id = isset ( $_GET ['message_id'] ) ? $_GET ['message_id'] : 0;
+	$isNotAjax= isset ( $_GET ['isNotAjax'] ) ? $_GET ['isNotAjax'] : 0;
+	
+	if (!$message_id) {
+	$message_id = isset ( $_POST ['message_id'] ) ? $_POST ['message_id'] : 0;
+	
+		}
+	 
+	$output="";
+
+ 
+ 
+ 
+	 
+ 
+	if($message_id!=0 ){
+	
+
+ 
+		$sql = "        SELECT    
+						*
+					    FROM {$dbprefix}messages message
+						WHERE
+						message.id = :messageId;";
+					
+						$st = $db->prepare ( $sql );
+				    	$st->execute ( array (
+												':messageId' => $message_id 
+										) );
+						
+				    	$message = $st->fetchAll ();
+					 
+				  
+if (isset ( $message )) $output ["message"] = $message;
+$pageContents = ob_get_contents ();
+$pageContents = ob_get_contents (); // Get all the page's HTML into a string
+ob_end_clean (); // Wipe the buffer
+
+// Replace <!--TITLE--> with $pageTitle variable contents, and print the HTML
+echo str_replace ('<!--TITLE-->', "Gönderi:". $message[0]["id"]  , $pageContents);
+
+}
+if($isNotAjax){
+	echo "<script>window.location = '".str_replace("get_message", "chat", $_SERVER ['REQUEST_URI'])."&room_id=". $message[0]["dest_id"]."'</script>";
+	
+}else {
+	echo json_encode ( $output );
+	
+}
+
+ 
+ // output JSON data
+
+
+ 

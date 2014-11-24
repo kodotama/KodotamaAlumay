@@ -1,0 +1,32 @@
+<?php
+$root = realpath ( $_SERVER ["DOCUMENT_ROOT"] );
+require_once $root . '/x7/includes/Util.php';
+$db = Util::getDb ();
+$dbprefix = Util::getConfig ()['prefix'];
+
+Util::startSession ();
+
+$usageTypeId = isset ( $_POST ['usageTypeId'] ) ? $_POST ['usageTypeId'] : 0;
+$roomName = isset ( $_POST ['roomName'] ) ? $_POST ['roomName'] : '';
+$rangeArray = isset ( $_POST ['rangeArray'] ) ? $_POST ['rangeArray'] : 0;
+
+$room_id = isset ( $_GET ['room_id'] ) ? $_GET ['room_id'] : 0;
+if (! $room_id) {
+	$room_id = isset ( $_POST ['room_id'] ) ? $_POST ['room_id'] : 0;
+}
+if (! $rangeArray) {
+	
+}
+if (isset ( $room ))
+	$output ["room"] = $room;
+if (isset ( $users ))
+	$output ["users"] = $users;
+if (isset ( $messages ))
+	$output ["messages"] = $messages;
+
+echo json_encode ( $output ); // output JSON data
+
+
+
+
+ 

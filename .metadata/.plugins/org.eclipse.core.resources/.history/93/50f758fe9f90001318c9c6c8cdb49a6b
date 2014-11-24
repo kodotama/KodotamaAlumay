@@ -1,0 +1,70 @@
+<?php
+date_default_timezone_set ( 'UTC' );
+$config = require ('./config.php');
+if (! is_array ( $config ) || empty ( $config ['dbname'] )) {
+	header ( 'Location: ./install/index.php' );
+	die ( "Redirecting to install/index.php" );
+}
+$root = realpath ( $_SERVER ["DOCUMENT_ROOT"] );
+
+require_once $root . '/x7/includes/Util.php';
+
+require ('./includes/x7chat.php');
+$x7 = new x7chat ();
+ 
+ 
+$parts = parse_url(Util::getFullURL());
+
+if(isset($parts['query']){
+	parse_str($parts['query'], $query);
+	
+	if(!empty($query))
+		$_SESSION['vars']=$query;
+}
+$page = isset ( $_GET ['page'] ) ? $_GET ['page'] : 'chat';
+
+if(empty($_SESSION["user_id"])){
+	
+	if (! in_array ( $page, array (
+			'sync',
+			'login'
+	) ))
+	$page ='dologin';
+	
+} 
+ 
+if (preg_match ( '#[^a-z0-9_]#', $page ) || ! file_exists ( './pages/' . $page . '.php' )) {
+	throw new exception ( 'Invalid page' );
+}
+ global   $urlParam;
+ $urlParam= isset ( $_GET ['urlParam'] ) ? $_GET ['urlParam'] : '';
+ $search= isset ( $_GET ['search'] ) ? $_GET ['search'] : '';
+ if ($search=='' & isset($paramArray['search']))
+ $search=$paramArray['search'];
+ 
+ 
+if (! in_array ( $page, array (
+		'sync',
+		'login',
+		'dologin' 
+) )) {
+	$x7->load ( 'user' );
+	try {
+		$user = new x7_user ();
+		$user_banned = $user->banned ();
+	} catch ( x7_exception $ex ) {
+		$user_banned = false;
+		
+		if (! empty ( $_SESSION ['user_id'] )) {
+			$_SESSION = array ();
+			session_destroy ();
+			$x7->go ( 'login' );
+		}
+	}
+	
+	if (x7_check_ip_bans () || $user_banned) {
+		$x7->set_message ( $x7->lang ( 'login_failed_banned' ) );
+		$x7->go ( 'login' );
+	}
+}
+require ('./pages/' . $page . '.php');

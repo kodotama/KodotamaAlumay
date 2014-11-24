@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+org.eclipse.debug.ui.DebugPerspective.switch_to_perspective=always
+org.eclipse.php.core.workspaceDefaultLocale=tr_TR
+org.eclipse.php.debug.core.pref_step_filters_list=9005?true?true?FRAMEWORK_HOME
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="org.zend.php.framework.v2.CONTAINER" key="local_php_creation_wizard"/>
+	<section name="com.zend.php.ide.internal.ui.wizards.NewLocalPHPProjectWizard">
+	</section>
+</section>

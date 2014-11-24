@@ -1,0 +1,22 @@
+var  UtilJS = new function(){
+	this.showMessages= function(type, message,navigate,urlRoom){
+		 
+		 
+		var messageSpan = $('#messageSpan');
+		messageSpan.addClass(type);
+		
+		if(navigate=='2') // if usage_type is DICTIONARY
+		{
+			urlRoom=urlRoom
+			+"&usageTypeId="+navigate
+			+"&roomNameStr="+ JSON.stringify(message);
+			urlRoom=JSON.stringify(urlRoom);
+			urlRoom='<a onclick=open_content_area('+urlRoom+')>Sen kur!</a>';
+ 			messageSpan.html(message+":"+urlRoom);
+        }else{
+        	messageSpan.text(message);
+        }
+		
+	};
+	
+};

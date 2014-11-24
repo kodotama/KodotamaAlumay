@@ -1,0 +1,10 @@
+<?php
+
+return array (
+		'user' => 'hunoGAlumay645',
+		'pass' => 'tengriHunoG3544',
+		'dbname' => 'tengriKorur4498',
+		'host' => 'www.alumay.com',
+		'prefix' => 'asndb_' ,
+		'title' => 'Alumay Deneme Yayýný'
+);

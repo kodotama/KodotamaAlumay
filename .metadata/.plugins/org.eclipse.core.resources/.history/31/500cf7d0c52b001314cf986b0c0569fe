@@ -1,0 +1,281 @@
+<!-- Start: page-top-outer -->
+<div id="page-top-outer">    
+
+<!-- Start: page-top -->
+<div id="page-top">
+
+	<!-- start logo -->
+	<div id="logo">
+	<a href="administrator.php"><img src="images/shared/logobuyuk.png" width="180"  alt="" /><img src="images/shared/yonetim.png" width="120" class="yonetimyeni"></a>
+	</div>
+	<!-- end logo -->
+	
+	<!--  start top-search -->
+	
+ 	<!--  end top-search -->
+ 	<div class="clear"></div>
+
+</div>
+<!-- End: page-top -->
+
+</div>
+<!-- End: page-top-outer -->
+	
+<div class="clear">&nbsp;</div>
+ 
+<!--  start nav-outer-repeat................................................................................................. START -->
+<div class="nav-outer-repeat"> 
+<!--  start nav-outer -->
+<div class="nav-outer"> 
+
+		<!-- start nav-right -->
+		<div id="nav-right">
+		
+		
+			<a href="logout.php" id="logout"><img src="images/shared/nav/nav_logout.gif" width="64" height="14" alt="" /></a>
+			<div class="clear">&nbsp;</div>
+		
+			<!--  start account-content -->	
+			<div class="account-content">
+			<div class="account-drop-inner">
+				<a href="" id="acc-settings">Settings</a>
+				<div class="clear">&nbsp;</div>
+				<div class="acc-line">&nbsp;</div>
+				<a href="" id="acc-details">Personal details </a>
+				<div class="clear">&nbsp;</div>
+				<div class="acc-line">&nbsp;</div>
+				<a href="" id="acc-project">Project details</a>
+				<div class="clear">&nbsp;</div>
+				<div class="acc-line">&nbsp;</div>
+				<a href="" id="acc-inbox">Inbox</a>
+				<div class="clear">&nbsp;</div>
+				<div class="acc-line">&nbsp;</div>
+				<a href="" id="acc-stats">Statistics</a> 
+			</div>
+			</div>
+			<!--  end account-content -->
+		
+		</div>
+		<!-- end nav-right -->
+
+
+		<!--  start nav -->
+		<div class="nav">
+		<div class="table">
+		<?php
+		if($sayi==1)
+		{
+		?>
+		<ul class="current"><li><a href="administrator.php"><b>Giriþ</b><!--[if IE 7]><!--></a><!--<![endif]-->
+		<!--[if lte IE 6]><table><tr><td><![endif]-->
+		<?php
+		}
+		else
+		{
+		?>
+        <ul class="select">
+          <li><a href="administrator.php"><b>Giriþ</b><!--[if IE 7]><!--></a><!--<![endif]-->
+        <?php
+		}
+		?>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+		</ul>
+		
+		<div class="nav-divider">&nbsp;</div>
+		<?php
+		if($sayi==2)
+		{
+		?>
+		<ul class="current"><li><a href="urunler.php"><b>Ürünler</b><!--[if IE 7]><!--></a><!--<![endif]-->
+        <div class="select_sub show">
+			<ul class="sub">
+            <?php
+			if($dsa==1)
+			{
+			?>
+            <li class="sub_show"><a href="urunler.php">Tüm Ürünler</a></li>
+				<li><a href="urunekle.php">Ürün Ekle</a></li>
+                <li><a href="kategoriekle.php">Kategoriler</a></li>
+            <?php
+			}
+			else if($dsa==2)
+			{
+			?>
+				<li><a href="urunler.php">Tüm Ürünler</a></li>
+				<li class="sub_show"><a href="urunekle.php">Ürün Ekle</a></li>
+			<li><a href="kategoriekle.php">Kategoriler</a></li>
+            <?php
+			}
+			
+			else if($dsa==3)
+			{
+			?>
+				<li><a href="urunler.php">Tüm Ürünler</a></li>
+				<li><a href="urunekle.php">Ürün Ekle</a></li>
+				<li class="sub_show"><a href="kategoriekle.php">Kategoriler</a></li>
+            <?php
+			}
+			?>
+			</ul> 
+		</div>
+		<?php
+		}else
+		{
+		?>
+        <ul class="select"><li><a href="urunler.php"><b>Ürünler</b><!--[if IE 7]><!--></a><!--<![endif]-->
+         <div class="select_sub">
+			<ul class="sub">
+            
+				<li><a href="urunler.php">Tüm Ürünler</a></li>
+				<li><a href="urunekle.php">Ürün Ekle</a></li>
+				<li><a href="kategoriekle.php">Kategoriler</a></li>
+			</ul>
+		</div>
+        <?php
+		}
+		?>
+        
+        <!--[if lte IE 6]><table><tr><td><![endif]-->
+		
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+		</ul>
+		
+		
+		
+		<div class="nav-divider">&nbsp;</div>
+		<?php
+		if($sayi==4)
+		{
+		?>
+		<ul class="current"><li><a href="haberler.php"><b>Haberler</b><!--[if IE 7]><!--></a><!--<![endif]-->
+        <div class="select_sub show">
+			<ul class="sub">
+            <?php
+			if($asd==1)
+			{
+			?>
+            <li class="sub_show"><a href="haberler.php">Tüm Haberler</a></li>
+				<li><a href="haberekle.php">Haber Ekle</a></li>
+            <?php
+			}
+			else if($asd==2)
+			{
+			?>
+				<li><a href="haberler.php">Tüm Haberler</a></li>
+				<li class="sub_show"><a href="haberekle.php">Haber Ekle</a></li>
+			
+            <?php
+			}
+			?>	
+			</ul>
+		</div>
+		<?php
+		}else
+		{
+		?>
+        <ul class="select"><li><a href="haberler.php"><b>Haberler</b><!--[if IE 7]><!--></a><!--<![endif]-->
+         <div class="select_sub">
+			<ul class="sub">
+            
+				<li><a href="haberler.php">Tüm Haberler</a></li>
+				<li><a href="haberekle.php">Haber Ekle</a></li>
+				
+			</ul>
+		</div>
+        <?php
+		}
+		?>
+        
+        <!--[if lte IE 6]><table><tr><td><![endif]-->
+		
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+		</ul>
+		
+		
+		
+        <div class="nav-divider">&nbsp;</div>
+		<?php
+		if($sayi==5)
+		{
+		?>
+		<ul class="current"><li><a href="hakkimizda.php"><b>Hakkýmýzda</b><!--[if IE 7]><!--></a><!--<![endif]-->
+        
+		<?php
+		}else
+		{
+		?>
+        <ul class="select"><li><a href="hakkimizda.php"><b>Hakkýmýzda</b><!--[if IE 7]><!--></a><!--<![endif]-->
+         
+        <?php
+		}
+		?>
+        
+      
+		</li>
+		</ul>
+        
+        <div class="nav-divider">&nbsp;</div>
+		<?php
+		if($sayi==6)
+		{
+		?>
+		<ul class="current"><li><a href="uygulamalar.php"><b>Uygulamalar</b><!--[if IE 7]><!--></a><!--<![endif]-->
+        
+		<?php
+		}else
+		{
+		?>
+        <ul class="select"><li><a href="uygulamalar.php"><b>Uygulamalar</b><!--[if IE 7]><!--></a><!--<![endif]-->
+         
+        <?php
+		}
+		?>
+        
+      
+		</li>
+		</ul>
+		
+        
+        <div class="nav-divider">&nbsp;</div>
+		<?php
+		if($sayi==6)
+		{
+		?>
+		<ul class="current"><li><a href="uygulamalar.php"><b>Yeni Kullanýcý</b><!--[if IE 7]><!--></a><!--<![endif]-->
+        
+		<?php
+		}else
+		{
+		?>
+        <ul class="select"><li><a href="uygulamalar.php"><b>Yeni Kullanýcý</b><!--[if IE 7]><!--></a><!--<![endif]-->
+         
+        <?php
+		}
+		?>
+        
+      
+		</li>
+		</ul>
+		    
+        
+        
+        
+        
+        
+		
+		<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+		</div>
+		<!--  start nav -->
+
+</div>
+<div class="clear"></div>
+<!--  start nav-outer -->
+</div>
+<!--  start nav-outer-repeat................................................... END -->
+
+  <div class="clear"></div>

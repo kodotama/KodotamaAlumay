@@ -1,0 +1,145 @@
+<?php
+$root = realpath ( $_SERVER ["DOCUMENT_ROOT"] );
+require_once $root . '/x7/includes/Util.php';
+$x7->load ( 'user' );
+
+$db = $x7->db ();
+
+if (empty ( $_SESSION ['user_id'] )) {
+	die ( json_encode ( array (
+			'redirect' => $x7->url ( 'login' ) 
+	) ) );
+}
+
+$room_id = isset ( $_POST ['room'] ) ? $_POST ['room'] : array ();
+$dest_type = isset ( $_POST ['dest_type'] ) ? $_POST ['dest_type'] : array ();
+$message = isset ( $_POST ['message'] ) ? $_POST ['message'] : array ();
+
+$server_rooms = isset ( $_SESSION ['rooms'] ) ? $_SESSION ['rooms'] : array ();
+
+$user_id = $_SESSION ['user_id'];
+
+$user = new x7_user ();
+$user_data = $user->data ();
+$font_color = $user_data ['message_font_color'];
+$font_size = $user_data ['message_font_size'];
+$font_face = $user_data ['message_font_face'];
+
+if ($font_face) {
+	if (! isset ( $_SESSION ['cache'] ['font_face'] [$font_face] )) {
+		$sql = "
+				SELECT
+					font
+				FROM {$x7->dbprefix}message_fonts
+				WHERE
+					id = :id
+				LIMIT 1;
+			";
+		$st = $db->prepare ( $sql );
+		$st->execute ( array (
+				':id' => $font_face 
+		) );
+		$face = $st->fetch ();
+		$st->closeCursor ();
+		
+		if ($face) {
+			$_SESSION ['cache'] ['font_face'] [$font_face] = $face ['font'];
+		} else {
+			$_SESSION ['cache'] ['font_face'] [$font_face] = '';
+		}
+	}
+	
+	$font_face = $_SESSION ['cache'] ['font_face'] [$font_face];
+}
+
+$sql = "
+		INSERT INTO {$x7->dbprefix}messages (
+			timestamp, 
+			message_type, 
+			dest_type, 
+			dest_id, 
+			source_type, 
+			source_id, 
+			message,
+			font_size,
+			font_color,
+			font_face
+		) VALUES (
+			:timestamp, 
+			:message_type, 
+			:dest_type, 
+			:dest_id, 
+			:source_type, 
+			:source_id, 
+			:message,
+			:font_size,
+			:font_color,
+			:font_face
+		)
+	";
+$st = $db->prepare ( $sql );
+$st->execute ( array (
+		':timestamp' => date ( 'Y-m-d H:i:s' ),
+		':message_type' => 'message',
+		':message' => $message,
+		':dest_type' => $dest_type,
+		':dest_id' => $room_id,
+		':source_type' => 'user',
+		':source_id' => $user_id,
+		':font_size' => $font_size,
+		':font_color' => $font_color,
+		':font_face' => $font_face 
+) );
+$insertedId = $db->lastInsertId();
+$tagnameArray= array (
+			'miss',
+			'hash',
+			'pblog',
+	);
+$arrayTo = Util::getTextBetweenTags($message, $tagnameArray);
+
+
+			$commaSeperatedString=Util::convertArrayCommaSeperatedString($arrayTo, $tagnameArray);
+if(!empty($commaSeperatedString)){
+			$sql="Select id from {$x7->dbprefix}rooms where name in(".$commaSeperatedString.")";
+			$st = $db->prepare ( $sql );
+			$st->execute ();
+			$idArray=$st->fetchAll();
+			$valueString="";
+			$i=sizeof($idArray);
+			
+			if($i){
+						 
+							foreach ($idArray as $value) {
+						 
+									$valueString=$valueString." (".$insertedId.",".$room_id.",".$value["id"].")";
+						  			$valueString=$valueString.",";
+							
+								}
+									$valueString=substr($valueString, 0, -1);
+									
+ 								$sql="insert into {$x7->dbprefix}message_rooms  (message_id, real_room_id, hashtag_room_id) values ".$valueString;
+								$st = $db->prepare ( $sql );
+								$st->execute ();
+			}
+			}
+			
+			
+if (isset ( $insertedId ))
+			{
+				$output = array (
+						'insertedId' => $insertedId
+				);
+			
+			 
+				// store session data
+				$antiflood = array (
+						'roomId' => $roomId,
+						'timestamp' => date ( 'Y-m-d H:i:s' )
+						
+						
+				);
+				$_SESSION['antiflood']=$antiflood;
+				
+				echo json_encode ( $output ); // output JSON data
+			}

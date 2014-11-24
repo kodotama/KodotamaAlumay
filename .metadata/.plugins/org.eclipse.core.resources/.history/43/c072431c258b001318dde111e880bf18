@@ -1,0 +1,300 @@
+var  RoomConstruction = new function(){
+var	roomConstruction=this;
+this.pass="";
+this.msg="";
+this.info="";
+this.messageId="";
+this.setPass=function(pass){
+ 
+	roomConstruction.pass=pass;
+};
+this.getPass=function(){
+	return roomConstruction.pass;
+};
+
+
+this.deleteMessage=function(messageId, token, userId) {
+	 
+  
+    var joinRoomFunctionURL = window.location.origin+ "/x7/pages/deleteMessage.php";
+   
+	var argJson = {
+		'message_id' : messageId,
+		'token':token,
+		'userId': userId
+	};
+    
+ 
+
+	$.ajax({
+		type : "POST",
+		url : joinRoomFunctionURL,
+		dataType : "json",
+		data : argJson,
+		success : function(jSonMessageComponents) {
+
+			 deleteMessagesAjaxFunc(jSonMessageComponents);
+	 
+   
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			 
+			alert('joinroom.js:1:' + xhr.status);
+			alert(thrownError);
+		}
+	});
+
+	// AJAX ICINDEN CAGRILAN FONKSIYONLAR
+
+	function deleteMessagesAjaxFunc(jSonMessageComponents) {
+		 deleteInfo= jSonMessageComponents.deleteInfo;
+	 
+   }
+	
+};
+
+this.getMessage=function(messageId, token, userId) {
+	 
+  
+    var joinRoomFunctionURL = window.location.origin+"/x7/pages/get_message.php";
+   
+	var argJson = {
+		'message_id' : messageId,
+		'token': token,
+		'userId': userId
+		
+	};
+    
+ 
+
+	$.ajax({
+		type : "POST",
+		url : joinRoomFunctionURL,
+		dataType : "json",
+		data : argJson,
+		success : function(jSonMessageComponents) {
+
+		 getMessagesAjaxFunc(jSonMessageComponents);
+	 
+   
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			 
+			alert('joinroom.js:1:' + xhr.status);
+			alert(thrownError);
+		}
+	});
+
+	// AJAX ICINDEN CAGRILAN FONKSIYONLAR
+
+	function getMessagesAjaxFunc(jSonMessageComponents) {
+	    msg= jSonMessageComponents.message[0].message;
+		var dbValue=msg;
+		dbValue=dbValue.replace('<i ','[i ');
+		dbValue=dbValue.replace('<v ','[v ');
+		dbValue=dbValue.replace('<c ','[c ');
+		dbValue=dbValue.replace('></i>','][/i] ');
+		dbValue=dbValue.replace('></v>','][/v]');
+		dbValue=dbValue.replace('></c>','][/c]');
+		dbValue= dbValue.replace("<compa>", "[compa]");
+		dbValue= dbValue.replace( "<miss>", "[miss]");
+		dbValue= dbValue.replace( "<dict>", "[dict]");
+        dbValue= dbValue.replace( "<hash>", "[hash]");
+		dbValue= dbValue.replace("<pblog>", "[pblog]");
+		dbValue= dbValue.replace("</compa>", "[/compa]");
+		dbValue= dbValue.replace( "</miss>", "[/miss]");
+		dbValue= dbValue.replace( "</dict>", "[/dict]");
+        dbValue= dbValue.replace( "</hash>", "[/hash]");
+		dbValue= dbValue.replace("</pblog>", "[/pblog]");		 
+		
+		
+		
+		var option = {dbValue:dbValue, type : "textarea", action :"none"};
+		$("#oneMsg"+messageId).editable(option, function(e){
+		 
+		});
+   }
+	
+};
+this.updateMessage=function(messageId, newText, token, userId) {
+	 
+  
+    var joinRoomFunctionURL = window.location.origin+"/x7/pages/updateMessage.php";
+   
+	var argJson = {
+		'message_id' : messageId,
+		'newText':newText,
+		'token':token,
+		'userId': userId
+	};
+    
+ 
+
+	$.ajax({
+		type : "POST",
+		url : joinRoomFunctionURL,
+		dataType : "json",
+		data : argJson,
+		success : function(jSonMessageComponents) {
+
+			updateMessagesAjaxFunc(jSonMessageComponents);
+	 
+   
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			 
+			alert('joinroom.js:1:' + xhr.status);
+			alert(thrownError);
+		}
+	});
+
+	// AJAX ICINDEN CAGRILAN FONKSIYONLAR
+
+	function updateMessagesAjaxFunc(jSonMessageComponents) {
+	    info= jSonMessageComponents.info[0].info;
+        UtilJS.showMessages('', info,'','');
+   }
+	
+};
+
+
+
+
+this.joinRoom=function(roomId, roomName, usageTypeId, limit) {
+ 
+	    var room= App.get_room(roomId, 'room');
+	    
+	    if(room){
+	    	 return	goToRoom(room);
+	    }else if(roomName!="" && usageTypeId>-1){
+	    	room= App.get_room_by_name(roomName, 'room', usageTypeId);
+	    	  if(room){
+	 	    	 return	goToRoom(room);
+
+	    	  }
+	    }
+	    	 
+	    var joinRoomFunctionURL =window.location.origin+ "/x7/pages/joinroom.php";
+       
+		var argJson = {
+			'room_id' : roomId,
+			'roomName': roomName,
+			'usageTypeId':usageTypeId,
+			'limit':limit,
+			"message_id":11072
+		};
+ 
+        	
+		if(RoomConstruction.getPass()){
+			argJson["password"]=RoomConstruction.getPass();
+        
+		}
+		
+		$.ajax({
+			type : "POST",
+			url : joinRoomFunctionURL,
+			dataType : "json",
+			data : argJson,
+			success : function(jSonRoomComponents) {
+
+				getRoomFromPHPtoJS(jSonRoomComponents);
+               
+			},
+			error : function(xhr, ajaxOptions, thrownError) {
+				 
+				alert('joinroom.js:1:' + xhr.status);
+				alert(thrownError);
+			}
+		});
+
+		// AJAX ICINDEN CAGRILAN FONKSIYONLAR
+
+		var users ='';
+		var messages = '';
+		function getRoomFromPHPtoJS(jSonRoomComponents) {
+				var url=jSonRoomComponents.url;
+				if(url){
+					open_content_area(url);
+					return false;
+				}
+				
+				var type=jSonRoomComponents.type;
+				if(type){
+					var message=jSonRoomComponents.message;
+					var urlRoom=jSonRoomComponents.urlRoom;
+					var navigate=jSonRoomComponents.navigate;
+ 					UtilJS.showMessages(type, message,navigate,urlRoom );
+ 					
+ 					return false;
+				}
+			    users = jSonRoomComponents.users;
+				room =  new App.Room(jSonRoomComponents.room);
+				messages = jSonRoomComponents.messages;
+               
+				room.type = 'room';
+			    if (typeof jSonRoomComponents.messageCount!= 'undefined') {
+		 				room.messageCount=jSonRoomComponents.messageCount.messageCount;
+
+						}else{
+							room.messageCount=0;	
+						}
+			   
+			    var key=room.usage_type_id;
+
+			    
+				App.add_room(room);
+
+     		    for ( var key in users) {
+					App.add_user_room(users[key], 1);
+				}
+	 
+				for (var key in messages) {
+			
+					var message = new App.Message(messages[key]);
+					 if(message.hashtag_room_id)
+					    	message.dest_id=message.hashtag_room_id
+					App.add_message(message);
+				}
+				
+				
+				usageTypeText="";
+                var key=room.usage_type_id;
+			    switch (key) {
+							case "0":
+								 usageTypeText="$";
+							     break;
+							case "1":
+								 usageTypeText="!";
+						     break;
+							case "2":
+								 usageTypeText="~";
+							    break;
+							case "3":
+								 usageTypeText="#";
+			                 	break;
+							case "4":
+								 usageTypeText="@";
+			                   break;
+						
+						}
+			 
+				
+				 
+			    room.currentMsgCountInit=messages.length;
+			    room.usageTypeText= usageTypeText;
+				
+			 	goToRoom(room);
+		}
+		
+		
+		
+		
+       function goToRoom(room){
+   		App.set_active_room(room);
+   		close_content_area();
+   		toggleUsageDiv();
+       return false;
+       }  
+		
+		}; 
+};

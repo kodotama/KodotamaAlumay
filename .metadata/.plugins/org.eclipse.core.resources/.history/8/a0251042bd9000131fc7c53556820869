@@ -1,0 +1,10 @@
+<?php
+
+return array (
+		'user' => 'megafibe_usr',
+		'pass' => '233223',
+		'dbname' => 'alumay_sndb',
+		'host' => 'localhost',
+		'prefix' => 'asndb_' ,
+		'title' => 'Alumay Deneme Yayýný'
+);

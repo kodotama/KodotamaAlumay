@@ -1,0 +1,33 @@
+<script type="text/javascript">
+	function addPoint(){
+	var userpoint = 1;
+		$.ajax({
+			
+			type: "POST",
+			url: "pages/ajax/user_addpoint.php",
+			data: "userpoint="+userpoint,
+			success:function(data){
+			
+			$("#buton1").attr("disabled",true);
+			}
+		});
+	}
+$(function(){
+	function getpoint(){
+	
+		$.ajax({
+		type: "POST",
+		url: "pages/ajax/user_point.php",
+		success: function(e){
+			$("div#user_point").html(e);
+		}
+		});
+	}
+	
+	setInterval(getpoint,500);
+	});
+
+</script>
+
+<div id="user_point"></div>
+<button onclick="addPoint()" id="buton1">Buradaydım</button>

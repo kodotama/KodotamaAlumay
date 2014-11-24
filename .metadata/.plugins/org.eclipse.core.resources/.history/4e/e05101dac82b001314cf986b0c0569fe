@@ -1,0 +1,17 @@
+<?php
+include "veri.php";
+$kategori=$_POST["email"];
+
+$sorgu="insert into cats (_cat) VALUES ('$kategori')";
+$deger=mysql_query($sorgu) or die(mysql_error());
+if($deger == 1)
+{
+	
+	?>
+<script type="text/javascript">
+window.location="yenikullanici.php?success=1";
+</script>
+<?php
+
+}
+?>

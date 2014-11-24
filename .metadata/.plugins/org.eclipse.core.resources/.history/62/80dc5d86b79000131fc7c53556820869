@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+<!--  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+-->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+<script src="scripts/jquery.ui.position.js"></script>
+
+<script src="scripts/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
+<script src="scripts/jquery.ui.core.js"></script>
+<script src="scripts/jquery.ui.widget.js"></script>
+<script src="./scripts/jquery.ui.widget.js"></script>
+<script src="./scripts/jquery.ui.datepicker.js"></script>
+<script src="./scripts/jquery-ui-timepicker-addon.js"></script>
+<script src="./scripts/jquery.editable.js"></script>
+
+
+ 
+<link rel="stylesheet" type="text/css"
+	href="themes/<?php echo $x7->config('theme'); ?>/style.css" />
+<link rel="stylesheet" href="css/prettyPhoto.css" type="text/css"
+	media="screen" title="prettyPhoto main stylesheet" charset="utf-8" />
+<link rel="stylesheet" href="css/ui-lightness/jquery.ui.all.css">
+
+</head>
+<body>
+
+	<div id="page_wrapper">
+		<div id="page_header" class="wrap">
+			<div id="header_inner">
+				<div id="page_logo">
+						<?php $esc($x7->config('title')); ?>
+					</div>
+ 				<div id="header_menu">
+					<ul>
+							<?php if(!empty($_SESSION['user_id'])): ?>
+						<li id="setpage_button" style="display: none"><a href="#"><?php $lang('setpage_button'); ?></a></li>
+						<li id="admin_create_room_button"><a href="#"><?php $lang('admin_rooms_button'); ?></a></li>
+						<li id="chatrooms_menu"><a href="#"><?php $lang('chatrooms_menu'); ?></a></li>
+						<li id="settings_menu"><a href="#"><?php $lang('settings_menu'); ?></a></li>
+								<?php if($access_acp): ?>
+									<li id="admin_menu"><a href="#"><?php $lang("admin_control_panel_button"); ?></a></li>
+								<?php endif; ?>
+								<li id="logout_menu"><a href="#"><?php $lang('logout_menu'); ?></a></li>
+							<?php else: ?>
+								<li id="register_menu"><a href="<?php $url('register'); ?>"><?php $lang('register_button'); ?></a></li>
+							<?php endif; ?>
+						</ul>
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+		</div>
+		<div id="page_content">
+			<div id="page_content_inner">
+				<div class="wrap">
+						<?php $display('layout/messages'); ?>

@@ -1,0 +1,3 @@
+defaultPHPServer=EasyPHP
+eclipse.preferences.version=1
+phpServers=<server><port>-1</port><zendserver_default_port>10081</zendserver_default_port><tunnelAuthUsername></tunnelAuthUsername><zendserver_enabled>false</zendserver_enabled><hostname>localhost</hostname><autoConnectTunnel>false</autoConnectTunnel><base_url>http\://localhost</base_url><tunnelAuthPassword></tunnelAuthPassword><zendserver_userdefaulturl>true</zendserver_userdefaulturl><tunnelEnabled>false</tunnelEnabled><tunnelReturnHost></tunnelReturnHost><zendserver_password></zendserver_password><name>EasyPHP</name><zendserver_defaulturl>/ZendServer</zendserver_defaulturl><document_root>C\:\\Program Files (x86)\\EasyPHP-12.1\\www\\x7</document_root></server>

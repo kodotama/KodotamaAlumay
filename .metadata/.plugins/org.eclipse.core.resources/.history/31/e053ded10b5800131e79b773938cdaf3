@@ -1,0 +1,24 @@
+var  UtilJS = new function(){
+	this.showMessages= function(type, message,navigate,urlRoom){
+		 
+		 
+		var messageSpan = $('#messageSpan');
+		messageSpan.addClass(type);
+		alert(navigate);
+		if(navigate>0) // if usage_type is DICTIONARY
+		{
+			message=message.trim();
+			var roomNameStr=message.replace(" ","+");
+			urlRoom=urlRoom
+			+"&usageTypeId="+navigate
+			+"&roomNameStr="+ roomNameStr;
+			urlRoom=JSON.stringify(urlRoom);
+			urlRoom='<a onclick=open_content_area('+urlRoom+')>Sen kur!</a>';
+ 			messageSpan.html(message+":"+urlRoom);
+        }else{
+        	messageSpan.text(message);
+        }
+		
+	};
+	
+};

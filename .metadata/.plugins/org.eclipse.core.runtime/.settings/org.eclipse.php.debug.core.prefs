@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+org.eclipse.php.debug.core.pathMapper=<pathMappers><item2><mapper></mapper><server>EasyPHP</server></item2><item1><mapper></mapper><server>EasyPHP</server></item1></pathMappers>
+org.eclipse.php.debug.core.xdebug_idekey=ECLIPSE_DBGP_192.168.2.2
+org.eclipse.php.debug.core.xdebug_multisession=true
+org.eclipse.php.debug.core.xdebug_remotesession=1
+org.eclipse.php.debug.coreenable_cli_debug=true
+org.eclipse.php.debug.coreinstalledPHPDefaults=org.eclipse.php.debug.core.zendDebugger\=PHP 5.4.11 (CLI)
+org.eclipse.php.debug.corephp_debugger_id=org.eclipse.php.debug.core.xdebugDebugger
+org.eclipse.php.debug.corezend_debug_port=10137

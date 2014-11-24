@@ -1,0 +1,7 @@
+INDEX VERSION 1.122+C:\Program Files (x86)\EasyPHP-12.1\www\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3317454903.index
+623040092.index
+1374416306.index
+3015251741.index
+1515928424.index
+385078501.index

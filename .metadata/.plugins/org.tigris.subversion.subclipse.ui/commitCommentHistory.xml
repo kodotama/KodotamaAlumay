@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommitComments>	<CommitComment>Güzel hâli.</CommitComment>
+	<CommitComment>Ufak bir düzeltme.</CommitComment>
+	<CommitComment>Mesaj kutusu ve butonu global hâle getirilmiştir.</CommitComment>
+	<CommitComment>		     if($perms [&apos;access_admin_panel&apos;] || $item[&apos;href&apos;]==&apos;admin_edit_room&apos; || $item[&apos;href&apos;]==&apos;admin_list_rooms&apos;): ?&gt;
+             Şeklinde bir kural eklenerek, her kullanıcının kendi şirket kanallarının listesini görmesi ve düzenleyebilmesi sağlandı.</CommitComment>
+	<CommitComment>Code formatting.</CommitComment>
+	<CommitComment>Code Formatting.</CommitComment>
+	<CommitComment>	if(!$room &amp;&amp; $room_id) // If there is room_id but no room related to the id.
+		{
+		$x7-&gt;set_message($x7-&gt;lang(&apos;room_not_found&apos;));
+		 
+		}else if($room &amp;&amp; $room_id) { // If there are both room_id and a room related to id.
+			$room_perms = $user-&gt;roomAuthorityTypes($room_id);
+			if(empty($room_perms[&apos;access_edit_room&apos;]) &amp;&amp; empty($perms[&apos;access_admin_panel&apos;]) )
+			{  //If the user neither has edit access nor admin access.
+				
+				$x7-&gt;fatal_error($x7-&gt;lang(&apos;access_denied&apos;));
+			}
+		}</CommitComment>
+	<CommitComment>Sisteme üye olan kimsenin (Çeri)  yetkili bulunduğu kanalların listesi: roomAuthorityTypes()  fonksiyonu ile Array türünde gönderilmektedir.</CommitComment>
+	<CommitComment>roomAuthorityTypes added.</CommitComment>
+	<CommitComment>The first commit</CommitComment>
+</CommitComments>

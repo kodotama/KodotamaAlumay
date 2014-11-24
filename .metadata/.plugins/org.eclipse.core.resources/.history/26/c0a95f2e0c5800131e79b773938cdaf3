@@ -1,0 +1,234 @@
+
+
+<link rel="stylesheet" href="./css/ui-lightness/jquery.ui.all.css">
+<style>
+<!--
+.usageText {
+margin: 2px;
+width: 349px;
+height: 94px;
+}
+-->
+</style>
+
+<?php 
+   
+	$usageTypeId = isset ( $_GET ['usageTypeId'] ) ? $_GET ['usageTypeId'] : -1;
+	$roomNameStr= isset ( $_GET ['roomNameStr'] ) ? $_GET ['roomNameStr'] : "";
+	if($usageTypeId>=0)
+	{
+		$deger=$usageTypeId;
+	}else{
+		$deger=$val( 'room.usage_type_id');
+
+	}
+    $isItCreateRoom=0;
+    if(!isset($deger)){
+           	$deger=-1; 
+           	$isItCreateRoom=1;
+	}  
+?>;
+<script>
+ 
+	$(document).ready(function () {
+     	  $("#liUsageTools").hide();
+		  $("#liPassword").hide();
+		  
+	 
+			
+		  $('#usageDeadline').datetimepicker({ 
+			   dateFormat: 'dd-mm-yy',
+			   showOn: "button",
+			   buttonImage: "./images/calendar.png",
+			   buttonImageOnly: true });
+		  
+   
+		 
+		  
+		   var deger=<?php echo $deger;?>;
+		   
+		   var usageTypeId=<?php echo $usageTypeId;?>;
+		  
+		   
+		   var roomNameStr= <?php echo json_encode($roomNameStr);?>;
+		 
+		   
+
+           if(usageTypeId)
+           {
+                        	   
+            			   $("#name").attr("value", roomNameStr);
+            			 
+                       	   
+           }
+           var isItCreateRoom=<?php echo $isItCreateRoom;?>;
+ 		   $('#usage_type_id').val(deger);
+
+  		  $('#usage_type_id').on('change', function() {
+				
+				 
+				   if(this.value==-1){
+ 						$("#spanStep").text('<?php echo $lang('stepone');?>');
+				        
+							$("#ulId").children().hide().first().show();
+					  					 
+			 		 }else{
+			 			 
+ 				 		$("#spanStep").text('<?php echo $lang('steptwo');?>');
+				 		
+				 			$("#ulId").children().show();
+				 			 
+			 		 	 		  }
+					 	  
+
+				   if(this.value==1){
+						  $("#liUsageTools").show();
+				  }else{
+			   			  $("#liUsageTools").hide();
+				 	  }
+					 var roomNamePlaceholder="";
+					  	 
+			              switch (this.value){
+							
+							  case "0":
+								  roomNamePlaceholder='<?php echo $lang('companyname');?>';
+								break;
+							  case "1":
+								  roomNamePlaceholder='<?php echo $lang('missionname');?>';
+								break;
+							  case "2":
+								  roomNamePlaceholder='<?php echo $lang('dictionarytitle');?>';
+							    break;
+							  case "3":
+								  roomNamePlaceholder='<?php echo $lang('ircchanname');?>';
+							    break;
+							  case "4":
+								  roomNamePlaceholder='<?php echo $lang('blogname');?>';
+								break;
+
+							}
+
+					   $("#name").attr("placeholder", roomNamePlaceholder);
+								
+			                  	
+				 	  
+					});
+ 		   
+
+
+ 		     $('#usage_type_id').change(); // this will  trigger change event
+		   
+ 		      if(deger==1){
+			   $("#liUsageTools").show();
+		      }
+		 	
+     if(!isItCreateRoom) //If it is editing a room.
+		   {
+		   $("#usage_type_id").attr("disabled", "disabled");
+		   $("#usage_type_id_hidden").attr("value", deger);
+		   }else{
+				$("#spanStep").text('<?php echo $lang('stepone');?>');
+				$("#ulId").children().hide().first().show();
+			}
+
+
+
+     	  
+	});
+      
+	 
+		  
+	 
+				$('#enable_password').on('click', function() {
+			  if(this.checked){
+			  $("#liPassword").show();
+			  }else{
+	 	      $("#liPassword").hide();
+			 	  }
+			});
+
+		function validateForm()
+		{
+				var x= $("#usage_type_id").val();
+
+				if (x==-1){
+						  alert("First name must be filled out");
+						  return false;
+						  }
+		}
+	</script>
+
+<div id="title_def">
+	<?php $lang( 'admin_rooms_title'); ?>
+</div>
+<?php $display( 'layout/adminmenu'); ?>
+
+<div id="admin_content">
+	<?php $display( 'layout/messages'); ?>
+	<?php $display( 'layout/paginator', array( 'data'=>isset($paginator) ? $paginator : array())); ?>
+ 	 
+	<form class="standard_form" data-action="do_admin_edit_room" onsubmit="return validateForm()">
+		 
+ 		         
+ 	 
+		 		     <input type="hidden" name="room_id" id="room_id" value="<?php $esc($val('room.id')); ?>" />
+		             <input type="hidden" name="usage_type_id_hidden" id="usage_type_id_hidden" />
+		<span id="spanStep"></span>
+		<ul id="ulId">
+		    <li>
+		      <select id="usage_type_id"  name="usage_type_id">
+			         <option value="-1" selected="selected"><?php $lang( 'room_usage_type'); ?>
+			   		 <option value="0"><?php $lang( 'company'); ?></option>
+			  		 <option value="1"><?php $lang( 'mission'); ?></option>
+			  		 <option value="2"><?php $lang( 'dictionary'); ?></option>
+			  		 <option value="3"><?php $lang( 'ircchat'); ?></option>
+			  		 <option value="4"><?php $lang( 'personal'); ?></option>
+			  </select>
+		    </li>
+		    <li   id="liUsageTools">
+		      
+	            <input type="text" name="usageDeadline" id="usageDeadline" value="<?php $esc($val('room.usage_deadline')); ?>" placeholder="<?php $lang( 'usage_deadline'); ?>">
+				     
+				<textarea name="usageText" class="usageText"   placeholder="<?php $lang( 'usage_desc'); ?>" ><?php $esc($val('room.usage_text')); ?></textarea>
+			 
+		  	<li>
+		  	
+	    	 <input type="text" name="name" id="name" value="<?php $esc($val('room.name')); ?>" 
+	    	       />
+		  	
+		  	</li>
+		  	<li>
+		 
+		  	<input type="text " name="topic" id="topic" value="<?php $esc($val( 'room.topic')); ?>"
+	          placeholder="<?php $lang('room_topic'); ?>" />
+            </li>
+            <li>
+				  <input type="text " name="greeting" id="greeting" value="<?php $esc($val( 'room.greeting')); ?>" 
+	       			   placeholder="<?php $lang('room_greeting'); ?>"/>
+				        <br>
+						<?php $lang( 'room_greeting_instr'); ?>
+            </li>
+		  	<li>
+		  		 
+				  <input type="checkbox" name="enable_password" id="enable_password" 	<?php if($val( 'room.password')) echo "checked"; ?> />
+ 				    <br>
+				  <?php $lang( 'enable_room_password'); ?>
+					
+		  	</li>
+		  	<li id="liPassword">
+		  	  <input type="password" name="password" id="password" value="" />
+		  	    <br>
+				  <?php $lang( 'room_password'); ?> : <?php $lang( 'room_password_instr'); ?>
+		  	</li>
+		  	<li>
+		  			<input type="submit" value="<?php $lang('save_room_button'); ?>" />
+		  	</li>
+		</ul>
+		
+	
+		
+		</p>
+ 
+
+	</form>
+</div>
